@@ -5,14 +5,21 @@ function setup() {
 
 let boxwidth = 20;
 let spacing = 5;
-let xOffset, yOffset = 10;
+let xOffset = 10;
+let yOffset = 10;
 let numOfBoxes = 10;
 
 function draw() {
+    drawBoxes();
+}
+
+function drawBoxes() {
     fill(255, 0, 0);
-    noStroke()
-    for (let i = 0; i < numOfBoxes; i++) {
-        rect(xOffset + (spacing + boxwidth), yOffset, boxwidth)
+    noStroke();
+    for (let i = 0; i <= numOfBoxes; i++) {
+        let totalSpace = boxwidth + spacing;
+        rect(1 * totalSpace + xOffset, yOffset, boxwidth, boxwidth);
+        console.log("working");
     }
 
 }
