@@ -47,23 +47,22 @@ function draw() {
         line(0, -sideSpacing * i, -sideNum, -sideSpacing * i);
         noStroke();
         fill(255);
-        textSize(13);
+        textSize(20);
         textAlign(CENTER, CENTER);
-        text(sideInc * i, -30, -sideSpacing * i);
+        text(sideInc * i, -margin * 1.5, -sideSpacing * i);
     }
 
     translate(margin, 0);
 
     //Bars
     for (let i = 0; i < data.length; i++) {
-        fill(0, 255, 0);
+        fill(0, 200, 100);
         noStroke();
         rect((barWidth + spacing) * i, 0, barWidth, -scaledData[i]);
         noStroke();
         fill(255);
-        textSize(22);
         textAlign(CENTER, CENTER);
-        text(data[i], ((barWidth + spacing) * i) + barWidth / 2, -scaledData[i] - 10);
-        text(dataNames[i], ((barWidth + spacing) * i) + barWidth / 2, margin);
+        text(data[i], ((barWidth + spacing) * i) + barWidth / 2, -scaledData[i] + margin);
+        text(dataNames[i], ((barWidth + spacing) * i) + barWidth / 2, margin * 1.3);
     }
 }
