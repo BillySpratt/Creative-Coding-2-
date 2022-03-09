@@ -3,6 +3,8 @@ class SBarChart {
         this.data = _data;
 
         this.chartTitle = "Fruit Sales 2021";
+        this.titleXAxis = "Type of Fruit";
+        this.titleYAxis = "Fruit Sales per 1,000";
 
         this.chartWidth = 300;
         this.chartHeight = 200;
@@ -63,6 +65,7 @@ class SBarChart {
         this.calculateMaxValue();
         this.drawTicks();
         this.drawHorizontalLines();
+        this.axisTitles();
         this.drawRects();
         this.drawAxis();
         this.BarTotal();

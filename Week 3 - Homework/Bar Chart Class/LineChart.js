@@ -3,6 +3,9 @@ class LineChart {
         this.data = _data;
 
         this.chartTitle = "Fruit Sales 2023";
+        this.titleXAxis = "Years";
+        this.titleYAxis = "Fruit Sales per 1,000";
+
 
         this.chartWidth = 200;
         this.chartHeight = 200;
@@ -60,7 +63,7 @@ class LineChart {
         this.calculateMaxValue();
         this.drawTicks();
         this.drawHorizontalLines();
-
+        this.axisTitles();
         this.drawRects();
         this.drawAxis();
         this.XAxisLabels();
@@ -81,6 +84,18 @@ class LineChart {
         textSize(this.titleSize);
         textAlign(CENTER)
         text(this.chartTitle, this.chartWidth / 2, -this.chartHeight * 1.15);
+    }
+
+    axisTitles() {
+        push()
+        textSize(this.chartWidth / 25);
+        textAlign(CENTER, BOTTOM);
+        fill(255, 80)
+        text(this.titleXAxis, this.chartWidth / 2, this.chartHeight * .3);
+        translate(-130, 0);
+        rotate(1.5 * PI);
+        text(this.titleYAxis, 100, 80)
+        pop()
     }
 
     drawTicks() {

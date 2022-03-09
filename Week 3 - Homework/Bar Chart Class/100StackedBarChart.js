@@ -116,7 +116,7 @@ class SBarChart100 {
                 textSize(this.axisNumSize);
                 textAlign(RIGHT, CENTER);
                 //text((i * this.tickIncrements).toFixed(this.numPlaces), -15, this.tickSpacing * -i);
-                text((i / this.numTicks) * 100 + "%", -15, this.tickSpacing * -i);
+                text(round((i / this.numTicks) * 100, 2) + "%", -15, this.tickSpacing * -i);
             }
         }
     }

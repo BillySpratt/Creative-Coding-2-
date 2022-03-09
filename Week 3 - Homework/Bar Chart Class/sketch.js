@@ -19,14 +19,18 @@ let data03 = [
     { name: "Oranges", total: 181, values: [{ catagory: "USA", value: 60 }, { catagory: "ASIA", value: 41 }, { catagory: "EUROPE", value: 80 }] },
     { name: "Bananas", total: 160, values: [{ catagory: "USA", value: 95 }, { catagory: "ASIA", value: 27 }, { catagory: "EUROPE", value: 38 }] },
     { name: "Pears", total: 196, values: [{ catagory: "USA", value: 15 }, { catagory: "ASIA", value: 87 }, { catagory: "EUROPE", value: 94 }] },
-    { name: "Apples", total: 72, values: [{ catagory: "USA", value: 28 }, { catagory: "ASIA", value: 25 }, { catagory: "EUROPE", value: 19 }] }
+    { name: "Apples", total: 72, values: [{ catagory: "USA", value: 28 }, { catagory: "ASIA", value: 25 }, { catagory: "EUROPE", value: 19 }] },
+    { name: "Grapes", total: 121, values: [{ catagory: "USA", value: 28 }, { catagory: "ASIA", value: 22 }, { catagory: "EUROPE", value: 71 }] },
+    { name: "Kiwi", total: 80, values: [{ catagory: "USA", value: 40 }, { catagory: "ASIA", value: 25 }, { catagory: "EUROPE", value: 15 }] }
 ];
 
 let data04 = [
     { name: "Oranges", total: 181, values: [{ catagory: "USA", value: 54 }, { catagory: "ASIA", value: 41 }, { catagory: "EUROPE", value: 62 }, { catagory: "UK", value: 24 }] },
     { name: "Bananas", total: 200, values: [{ catagory: "USA", value: 97 }, { catagory: "ASIA", value: 22 }, { catagory: "EUROPE", value: 38 }, { catagory: "UK", value: 43 }] },
     { name: "Pears", total: 274, values: [{ catagory: "USA", value: 15 }, { catagory: "ASIA", value: 87 }, { catagory: "EUROPE", value: 94 }, { catagory: "UK", value: 78 }] },
-    { name: "Apples", total: 90, values: [{ catagory: "USA", value: 28 }, { catagory: "ASIA", value: 15 }, { catagory: "EUROPE", value: 19 }, { catagory: "UK", value: 28 }] }
+    { name: "Apples", total: 90, values: [{ catagory: "USA", value: 28 }, { catagory: "ASIA", value: 15 }, { catagory: "EUROPE", value: 19 }, { catagory: "UK", value: 28 }] },
+    { name: "Grapes", total: 131, values: [{ catagory: "USA", value: 26 }, { catagory: "ASIA", value: 22 }, { catagory: "EUROPE", value: 56 }, { catagory: "UK", value: 27 }] },
+    { name: "Kiwi", total: 110, values: [{ catagory: "USA", value: 40 }, { catagory: "ASIA", value: 25 }, { catagory: "EUROPE", value: 15 }, { catagory: "UK", value: 30 }] }
 ];
 
 let data05 = [
@@ -37,13 +41,6 @@ let data05 = [
     { name: "2018", total: 41 },
     { name: "2019", total: 02 },
     { name: "2020", total: 31 }
-];
-
-let data06 = [
-    { name: "Oranges", total: [223, 200, 210, 228] },
-    { name: "Bananas", total: [223, 200, 210, 228] },
-    { name: "Pears", total: [223, 200, 210, 228] },
-    { name: "Apples", total: [223, 200, 210, 228] }
 ];
 
 let params1 = {
@@ -106,7 +103,7 @@ let params4 = {
     chartHeightMin: 50,
     chartHeightMax: 400,
 
-    numTicks: 10,
+    numTicks: 5,
     numTicksMin: 2,
     numTicksMax: 20,
 
@@ -131,23 +128,7 @@ let params5 = {
     marginMin: 2,
     marginMax: 30
 }
-let params6 = {
-    chartWidth: 300,
-    chartWidthMin: 50,
-    chartWidthMax: 400,
 
-    chartHeight: 300,
-    chartHeightMin: 50,
-    chartHeightMax: 400,
-
-    numTicks: 10,
-    numTicksMin: 2,
-    numTicksMax: 20,
-
-    margin: 30,
-    marginMin: 2,
-    marginMax: 30
-}
 
 let visible = true;
 let gui1;
@@ -155,16 +136,14 @@ let gui2;
 let gui3;
 let gui4;
 let gui5;
-let gui6;
 
 let chart01;
 let chart02;
 let chart03;
 let chart04;
 let chart05;
-let chart06;
 
-let xGap = 150;
+let xGap = 200;
 
 function setup() {
     createCanvas(1500, 900);
@@ -172,7 +151,7 @@ function setup() {
     chart01 = new BarChart(data01)
     chart01.chartWidth = 300;
     chart01.chartHeight = 200;
-    chart01.posX = xGap;
+    chart01.posX = 100;
     chart01.posY = 100 + params1.chartHeight;
     chart01.updateValues();
     //gui menu1
@@ -256,10 +235,6 @@ function draw() {
     chart05.posX = chart04.posX + params4.chartWidth + xGap;
     chart05.posY = 250 + params2.chartHeight + params5.chartHeight;
 
-    // chart06.render();
-    // chart06.updateValues(params6.chartWidth, params6.chartHeight, params6.numTicks, params6.margin);
-    // chart06.posX = chart05.posX + params5.chartWidth + xGap;
-    // chart06.posY = 100 + params6.chartHeight;
 }
 
 function keyPressed() {
@@ -296,13 +271,6 @@ function keyPressed() {
             visible = !visible;
             if (visible) gui5.show();
             else gui5.hide();
-            break;
-    }
-    switch (key) {
-        case '6':
-            visible = !visible;
-            if (visible) gui6.show();
-            else gui6.hide();
             break;
     }
 }
