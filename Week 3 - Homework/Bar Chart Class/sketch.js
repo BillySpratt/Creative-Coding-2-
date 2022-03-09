@@ -4,7 +4,7 @@ let data01 = [
     { name: "Pears", total: 23 },
     { name: "Apples", total: 18 },
     { name: "Grapes", total: 41 },
-    { name: "Kiwi", total: 02 },
+    { name: "Kiwi", total: 12 },
     { name: "Melon", total: 31 }
 ];
 
@@ -12,7 +12,9 @@ let data02 = [
     { name: "Oranges", total: 223 },
     { name: "Bananas", total: 134 },
     { name: "Pears", total: 233 },
-    { name: "Apples", total: 118 }
+    { name: "Apples", total: 118 },
+    { name: "Grapes", total: 41 },
+    { name: "Kiwi", total: 12 }
 ];
 
 let data03 = [
@@ -46,11 +48,11 @@ let data05 = [
 let params1 = {
     chartWidth: 300,
     chartWidthMin: 50,
-    chartWidthMax: 400,
+    chartWidthMax: 500,
 
     chartHeight: 200,
     chartHeightMin: 50,
-    chartHeightMax: 400,
+    chartHeightMax: 500,
 
     numTicks: 10,
     numTicksMin: 2,
@@ -58,16 +60,25 @@ let params1 = {
 
     margin: 10,
     marginMin: 2,
-    marginMax: 30,
+    marginMax: 40,
+
+    Show_Value: true,
+    Show_Label: true,
+    Rotate_Label: true,
+    Show_Total: true,
+
+    Chart_Title: "Fruit Sales 2019",
+    xAxis_Title: "Fruit Type",
+    yAxis_Title: "Fruit sold (per 1,000)",
 }
 let params2 = {
     chartWidth: 300,
     chartWidthMin: 50,
-    chartWidthMax: 400,
+    chartWidthMax: 500,
 
     chartHeight: 200,
     chartHeightMin: 50,
-    chartHeightMax: 400,
+    chartHeightMax: 500,
 
     numTicks: 10,
     numTicksMin: 2,
@@ -75,16 +86,26 @@ let params2 = {
 
     margin: 10,
     marginMin: 2,
-    marginMax: 30
+    marginMax: 40,
+
+    Show_Value: true,
+    Show_Label: true,
+    Rotate_Label: true,
+    Show_Total: true,
+    Rotate_Axis_num: true,
+
+    Chart_Title: "Fruit Sales 2020",
+    xAxis_Title: "Fruit Type",
+    yAxis_Title: "Fruit sold (per 1,000)",
 }
 let params3 = {
     chartWidth: 300,
     chartWidthMin: 50,
-    chartWidthMax: 400,
+    chartWidthMax: 500,
 
     chartHeight: 200,
     chartHeightMin: 50,
-    chartHeightMax: 400,
+    chartHeightMax: 500,
 
     numTicks: 10,
     numTicksMin: 2,
@@ -92,16 +113,27 @@ let params3 = {
 
     margin: 30,
     marginMin: 2,
-    marginMax: 30
+    marginMax: 40,
+
+    Show_Value: true,
+    Show_Label: true,
+    Rotate_Label: true,
+    Show_Legend: true,
+    Show_Total: true,
+    Show_Avg: true,
+
+    Chart_Title: "Fruit Sales 2021",
+    xAxis_Title: "Fruit Type",
+    yAxis_Title: "Fruit sold (per 1,000)",
 }
 let params4 = {
     chartWidth: 300,
     chartWidthMin: 50,
-    chartWidthMax: 400,
+    chartWidthMax: 500,
 
     chartHeight: 200,
     chartHeightMin: 50,
-    chartHeightMax: 400,
+    chartHeightMax: 500,
 
     numTicks: 5,
     numTicksMin: 2,
@@ -110,15 +142,25 @@ let params4 = {
     margin: 20,
     marginMin: 2,
     marginMax: 40,
+
+    Show_Value: true,
+    Show_Label: true,
+    Rotate_Label: true,
+    Show_Legend: true,
+    Show_Total: true,
+
+    Chart_Title: "Fruit Sales 2022",
+    xAxis_Title: "Fruit Type",
+    yAxis_Title: "Percent (%)",
 }
 let params5 = {
     chartWidth: 300,
     chartWidthMin: 50,
-    chartWidthMax: 400,
+    chartWidthMax: 500,
 
     chartHeight: 200,
     chartHeightMin: 50,
-    chartHeightMax: 400,
+    chartHeightMax: 500,
 
     numTicks: 10,
     numTicksMin: 2,
@@ -126,7 +168,16 @@ let params5 = {
 
     margin: 10,
     marginMin: 2,
-    marginMax: 30
+    marginMax: 40,
+
+    Show_Value: true,
+    Show_Label: true,
+    Rotate_Label: true,
+    Show_Total: true,
+
+    Chart_Title: "Fruit Sales 2019",
+    xAxis_Title: "Fruit Type",
+    yAxis_Title: "Fruit sold (per 1,000)",
 }
 
 
@@ -163,7 +214,7 @@ function setup() {
     chart02 = new HBarChart(data02)
     chart02.chartWidth = 200;
     chart02.chartHeight = 200;
-    chart02.posX = chart01.posX + params1.chartWidth + xGap;;
+    chart02.posX = chart01.posX + params1.chartWidth + xGap;
     chart02.posY = 100 + params2.chartHeight;
     chart02.updateValues();
     //gui menu2
@@ -212,26 +263,26 @@ function setup() {
 
 function draw() {
     background(100);
-    chart01.render();
-    chart01.updateValues(params1.chartWidth, params1.chartHeight, params1.numTicks, params1.margin);
+    chart01.render(params1.Chart_Title, params1.xAxis_Title, params1.yAxis_Title);
+    chart01.updateValues(params1.chartWidth, params1.chartHeight, params1.numTicks, params1.margin, params1.Show_Value, params1.Show_Label, params1.Rotate_Label, params1.Show_Total);
     chart01.posY = 100 + params1.chartHeight;
 
-    chart02.render();
-    chart02.updateValues(params2.chartWidth, params2.chartHeight, params2.numTicks, params2.margin);
+    chart02.render(params2.Chart_Title, params2.xAxis_Title, params2.yAxis_Title);
+    chart02.updateValues(params2.chartWidth, params2.chartHeight, params2.numTicks, params2.margin, params2.Show_Value, params2.Show_Label, params2.Rotate_Label, params2.Show_Total, params2.Rotate_Axis_num);
     chart02.posX = chart01.posX + params1.chartWidth + xGap;
     chart02.posY = 100 + params2.chartHeight;
 
-    chart03.render();
-    chart03.updateValues(params3.chartWidth, params3.chartHeight, params3.numTicks, params3.margin);
+    chart03.render(params3.Chart_Title, params3.xAxis_Title, params3.yAxis_Title);
+    chart03.updateValues(params3.chartWidth, params3.chartHeight, params3.numTicks, params3.margin, params3.Show_Value, params3.Show_Label, params3.Rotate_Label, params3.Show_Legend, params3.Show_Total, params3.Show_Avg);
     chart03.posX = chart02.posX + params2.chartWidth + xGap;
     chart03.posY = 100 + params3.chartHeight;
 
-    chart04.render();
-    chart04.updateValues(params4.chartWidth, params4.chartHeight, params4.numTicks, params4.margin);
+    chart04.render(params4.Chart_Title, params4.xAxis_Title, params4.yAxis_Title);
+    chart04.updateValues(params4.chartWidth, params4.chartHeight, params4.numTicks, params4.margin, params4.Show_Value, params4.Show_Label, params4.Rotate_Label, params4.Show_Legend, params4.Show_Total);
     chart04.posY = 250 + params1.chartHeight + params4.chartHeight;
 
-    chart05.render();
-    chart05.updateValues(params5.chartWidth, params5.chartHeight, params5.numTicks, params5.margin);
+    chart05.render(params5.Chart_Title, params5.xAxis_Title, params5.yAxis_Title);
+    chart05.updateValues(params5.chartWidth, params5.chartHeight, params5.numTicks, params5.margin, params5.Show_Value, params5.Show_Label, params5.Rotate_Label, params5.Show_Total);
     chart05.posX = chart04.posX + params4.chartWidth + xGap;
     chart05.posY = 250 + params2.chartHeight + params5.chartHeight;
 

@@ -36,15 +36,16 @@ class LineChart {
         this.calculateMaxValue();
     }
 
-    updateValues(chartWidth, chartHeight, numTicks, margin) {
+    updateValues(chartWidth, chartHeight, numTicks, margin, Values, sLabels, rLabels, Totals) {
         this.chartWidth = chartWidth;
         this.chartHeight = chartHeight;
         this.margin = margin;
         this.numTicks = numTicks;
 
-        this.showValues = true;
-        this.showLabels = true;
-        this.rotateLabels = true;
+        this.showValues = Values;
+        this.showLabels = sLabels;
+        this.rotateLabels = rLabels;
+        this.showTotal = Totals;
 
         this.tickSpacing = this.chartHeight / this.numTicks;
         this.availableWidth = this.chartWidth - (this.margin * 2) - (this.spacing * (this.data.length - 1));
@@ -57,14 +58,17 @@ class LineChart {
         this.tickIncrements = this.maxValue / this.numTicks;
     }
 
-    render() {
+    render(title, xAxis, yAxis) {
         push()
+        this.chartTitle = title;
+        this.titleXAxis = xAxis;
+        this.titleYAxis = yAxis;
         translate(this.posX, this.posY);
         this.calculateMaxValue();
         this.drawTicks();
         this.drawHorizontalLines();
         this.axisTitles();
-        this.drawRects();
+        this.drawLines();
         this.drawAxis();
         this.XAxisLabels();
         this.BarTotal();
@@ -82,19 +86,21 @@ class LineChart {
         line(0, 0, 0, -this.chartHeight); //y
         line(0, 0, this.chartWidth, 0); //x
         textSize(this.titleSize);
-        textAlign(CENTER)
+        textAlign(CENTER);
+        fill(255);
         text(this.chartTitle, this.chartWidth / 2, -this.chartHeight * 1.15);
     }
 
     axisTitles() {
         push()
+        noStroke();
         textSize(this.chartWidth / 25);
         textAlign(CENTER, BOTTOM);
         fill(255, 80)
-        text(this.titleXAxis, this.chartWidth / 2, this.chartHeight * .3);
+        text(this.titleXAxis, this.chartWidth / 2, 60);
         translate(-130, 0);
         rotate(1.5 * PI);
-        text(this.titleYAxis, 100, 80)
+        text(this.titleYAxis, this.chartHeight / 2, 80)
         pop()
     }
 
@@ -137,9 +143,9 @@ class LineChart {
         }
     }
 
-    drawRects() {
+    drawLines() {
         push();
-        translate(this.margin, 0);
+        translate(this.margin + (this.barWidth / 2), 0);
         for (let i = 0; i < this.data.length; i++) {
             let colorNumber = i % this.colors.length;
             stroke(this.colors[colorNumber]);
@@ -147,10 +153,11 @@ class LineChart {
             beginShape();
             for (let j = 0; j < this.data.length; j++) {
                 vertex((this.barWidth + this.spacing) * j, this.scaleData(-this.data[j].total));
+                fill(this.colors[colorNumber]);
                 ellipse((this.barWidth + this.spacing) * j, this.scaleData(-this.data[j].total), 5)
+                noFill();
             }
             endShape();
-            // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, this.scaleData(-this.data[i].total));
         }
         pop()
     }
@@ -181,14 +188,16 @@ class LineChart {
     }
     BarTotal() {
         translate(this.margin, 0);
-        for (let i = 0; i < this.data.length; i++) {
-            push();
-            noStroke();
-            fill(255);
-            textSize(this.chartHeight / 12);
-            textAlign(CENTER, BOTTOM);
-            text(this.data[i].total, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaleData(-this.data[i].total));
-            pop();
+        if (this.showTotal) {
+            for (let i = 0; i < this.data.length; i++) {
+                push();
+                noStroke();
+                fill(255, 150);
+                textSize(this.barNumSize);
+                textAlign(CENTER, BOTTOM);
+                text(this.data[i].total, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaleData(-this.data[i].total) - 5);
+                pop();
+            }
         }
     }
 }

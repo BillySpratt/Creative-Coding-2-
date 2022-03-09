@@ -32,16 +32,17 @@ class HBarChart {
         this.calculateMaxValue();
     }
 
-    updateValues(chartWidth, chartHeight, numTicks, margin) {
+    updateValues(chartWidth, chartHeight, numTicks, margin, Values, sLabels, rLabels, Totals, rAxisNum) {
         this.chartWidth = chartWidth;
         this.chartHeight = chartHeight;
         this.margin = margin;
         this.numTicks = numTicks;
 
-        this.showValues = true;
-        this.showLabels = true;
-        this.rotateLabels = true;
-        this.rotateAxisNum = true;
+        this.showValues = Values;
+        this.showLabels = sLabels;
+        this.rotateLabels = rLabels;
+        this.showTotal = Totals;
+        this.rotateAxisNum = rAxisNum;
 
         this.tickSpacing = this.chartWidth / this.numTicks;
         this.availableWidth = this.chartHeight - (this.margin * 2) - (this.spacing * (this.data.length - 1));
@@ -81,7 +82,8 @@ class HBarChart {
         line(0, 0, 0, -this.chartHeight); //y
         line(0, 0, this.chartWidth, 0); //x
         textSize(this.titleSize);
-        textAlign(CENTER)
+        textAlign(CENTER);
+        fill(255);
         text(this.chartTitle, this.chartWidth / 2, -this.chartHeight * 1.15);
     }
 
@@ -90,10 +92,10 @@ class HBarChart {
         textSize(this.chartWidth / 25);
         textAlign(CENTER, BOTTOM);
         fill(255, 80)
-        text(this.titleXAxis, this.chartWidth / 2, this.chartHeight * .3);
+        text(this.titleXAxis, this.chartWidth / 2, 60);
         translate(-130, 0);
         rotate(1.5 * PI);
-        text(this.titleYAxis, 100, 80)
+        text(this.titleYAxis, this.chartHeight / 2, 60)
         pop()
     }
 
@@ -121,7 +123,10 @@ class HBarChart {
                     noStroke();
                     textSize(this.axisNumSize);
                     textAlign(CENTER);
-                    text((i * this.tickIncrements).toFixed(this.numPlaces), this.tickSpacing * i, this.margin);
+                    push()
+                    translate(-5 + this.tickSpacing * i, 25)
+                    text((i * this.tickIncrements).toFixed(this.numPlaces), 0, 0);
+                    pop();
                 }
 
             }
@@ -177,14 +182,16 @@ class HBarChart {
     }
     BarTotal() {
         translate(5, -this.margin);
-        for (let i = 0; i < this.data.length; i++) {
-            push();
-            noStroke();
-            fill(255);
-            textSize(this.barNumSize);
-            textAlign(LEFT, CENTER);
-            text(this.data[i].total, this.scaleData(this.data[i].total), -((this.barWidth + this.spacing) * i) - this.barWidth / 2);
-            pop();
+        if (this.showTotal) {
+            for (let i = 0; i < this.data.length; i++) {
+                push();
+                noStroke();
+                fill(255);
+                textSize(this.barNumSize);
+                textAlign(LEFT, CENTER);
+                text(this.data[i].total, this.scaleData(this.data[i].total), -((this.barWidth + this.spacing) * i) - this.barWidth / 2);
+                pop();
+            }
         }
     }
 }

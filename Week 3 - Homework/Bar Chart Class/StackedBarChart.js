@@ -19,7 +19,6 @@ class SBarChart {
         this.tickSpacing;
         this.barWidth;
         this.availableWidth;
-        let tempBarHeight = 0;
 
         this.axisNumSize = 14;
         this.labelSize = 14;
@@ -27,6 +26,7 @@ class SBarChart {
         this.barNumSize = 16;
 
         this.showValues = true;
+        this.showAvgLine = true;
         this.showLabels = true;
         this.rotateLabels = true;
         this.showLegend = true;
@@ -37,16 +37,18 @@ class SBarChart {
         this.calculateMaxValue();
     }
 
-    updateValues(chartWidth, chartHeight, numTicks, margin) {
+    updateValues(chartWidth, chartHeight, numTicks, margin, Values, sLabels, rLabels, Legend, Total, Avg) {
         this.chartWidth = chartWidth;
         this.chartHeight = chartHeight;
         this.margin = margin;
         this.numTicks = numTicks;
 
-        this.showValues = true;
-        this.showLabels = true;
-        this.rotateLabels = true;
-        this.showLegend = true;
+        this.showValues = Values;
+        this.showLabels = sLabels;
+        this.rotateLabels = rLabels;
+        this.showLegend = Legend;
+        this.ShowTotal = Total;
+        this.showAvgLine = Avg;
 
         this.tickSpacing = this.chartHeight / this.numTicks;
         this.availableWidth = this.chartWidth - (this.margin * 2) - (this.spacing * (this.data.length - 1));
@@ -59,14 +61,18 @@ class SBarChart {
         this.tickIncrements = this.maxValue / this.numTicks;
     }
 
-    render() {
+    render(title, xAxis, yAxis) {
         push()
+        this.chartTitle = title;
+        this.titleXAxis = xAxis;
+        this.titleYAxis = yAxis;
         translate(this.posX, this.posY);
         this.calculateMaxValue();
         this.drawTicks();
         this.drawHorizontalLines();
         this.axisTitles();
-        this.drawRects();
+        this.drawRects()
+        this.drawAvgLine();
         this.drawAxis();
         this.BarTotal();
         this.XAxisLabels();
@@ -85,19 +91,27 @@ class SBarChart {
         line(0, 0, 0, -this.chartHeight); //y
         line(0, 0, this.chartWidth, 0); //x
         textSize(this.titleSize);
-        textAlign(CENTER)
+        textAlign(CENTER);
+        fill(255);
         text(this.chartTitle, this.chartWidth / 2, -this.chartHeight * 1.15);
+
     }
 
     axisTitles() {
         push()
+        noStroke();
+        if (this.chartWidth >= 400) {
+            textSize(30);
+        } else {
+            textSize(this.chartWidth / 25);
+        };
         textSize(this.chartWidth / 25);
         textAlign(CENTER, BOTTOM);
         fill(255, 80)
-        text(this.titleXAxis, this.chartWidth / 2, this.chartHeight * .3);
+        text(this.titleXAxis, this.chartWidth / 2, 60);
         translate(-130, 0);
         rotate(1.5 * PI);
-        text(this.titleYAxis, 100, 80)
+        text(this.titleYAxis, this.chartHeight / 2, 80)
         pop()
     }
 
@@ -125,8 +139,6 @@ class SBarChart {
             stroke(255, 50);
             strokeWeight(1)
             line(0, this.tickSpacing * -i, this.chartWidth, this.tickSpacing * -i);
-
-
         }
     }
 
@@ -134,7 +146,6 @@ class SBarChart {
         push();
         translate(this.margin, 0);
         for (let i = 0; i < this.data.length; i++) {
-
             push()
             for (let j = 0; j < this.data[i].values.length; j++) {
                 let colorNumber = j % 7;
@@ -146,6 +157,25 @@ class SBarChart {
             pop()
         }
         pop()
+    }
+
+    drawAvgLine() {
+        if (this.showAvgLine) {
+            push();
+            translate(this.margin + (this.barWidth / 2), 0);
+            for (let i = 0; i < this.data.length; i++) {
+                stroke(255);
+                beginShape();
+                for (let j = 0; j < this.data.length; j++) {
+                    vertex((this.barWidth + this.spacing) * j, this.scaleData(-this.data[j].total / this.data[j].values.length));
+                    fill(255);
+                    ellipse((this.barWidth + this.spacing) * j, this.scaleData(-this.data[j].total / this.data[j].values.length), 5)
+                    noFill();
+                }
+                endShape();
+            }
+            pop()
+        }
     }
 
     XAxisLabels() {
@@ -175,14 +205,16 @@ class SBarChart {
 
     BarTotal() {
         translate(this.margin, 0);
-        for (let i = 0; i < this.data.length; i++) {
-            push();
-            noStroke();
-            fill(255);
-            textSize(16);
-            textAlign(CENTER, BOTTOM);
-            text(this.data[i].total, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaleData(-this.data[i].total));
-            pop();
+        if (this.ShowTotal) {
+            for (let i = 0; i < this.data.length; i++) {
+                push();
+                noStroke();
+                fill(255);
+                textSize(16);
+                textAlign(CENTER, BOTTOM);
+                text(this.data[i].total, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaleData(-this.data[i].total));
+                pop();
+            }
         }
     }
     Legend() {
